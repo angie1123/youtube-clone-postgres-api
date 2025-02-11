@@ -279,7 +279,7 @@ app.delete("/comment/:videoId/:commentId", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(index.html);
 });
 
 app.listen(3000, () => {
