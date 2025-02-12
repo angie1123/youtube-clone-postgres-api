@@ -1,10 +1,8 @@
 
-//postgres url
-postgresql://neondb_owner:KGBC6pSeV4hq@ep-rapid-snow-a5w98byn-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
 
 
 
-let express = require("express");
+const express = require("express");
 
 //to load environment variable from .env file into process.env
 require("dotenv").config();
@@ -12,8 +10,18 @@ require("dotenv").config();
 const { Pool } = require("pg");
 const { DATABASE_URL } = process.env;
 
-let app = express();
+const app = express();
+module.exports = app
 const cors = require("cors");
+const path = require("path");
+//This library allows you to interact with Firebase services from a backend environment (like a server), instead of just from client applications (like web or mobile apps).
+const admin = require("firebase-admin");
+const PORT = process.env.PORT || 3000;
+
+
+app.use(express.json());
+
+
 app.use(
   cors({
     origin: "http://localhost:5173", // Replace with your frontend's URL
@@ -22,7 +30,6 @@ app.use(
   }),
 );
 
-app.use(express.json());
 
 //express.json() is a built in middleware function in express that parses incoming request with JSON payloads
 //json payload is the data pass from the request
@@ -66,22 +73,14 @@ Copy code
   age: 30
 }
 */
-app.use(express.json());
 
-//This library allows you to interact with Firebase services from a backend environment (like a server), instead of just from client applications (like web or mobile apps).
-const admin = require("firebase-admin");
+
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 app.options("*", cors());
 
-// Initialize Firebase Admin SDK
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-  });
-}
 
 const pool = new Pool({
   connectionString: DATABASE_URL,
@@ -279,9 +278,9 @@ app.delete("/comment/:videoId/:commentId", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  res.sendFile(index.html);
+  res.sendFile(path.join(__dirname,'index.html'));
 });
 
-app.listen(3000, () => {
-  console.log("App is listening on port 3000");
+app.listen(PORT, () => {
+console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
