@@ -16,6 +16,8 @@ const cors = require("cors");
 const path = require("path");
 //This library allows you to interact with Firebase services from a backend environment (like a server), instead of just from client applications (like web or mobile apps).
 const admin = require("firebase-admin");
+const { getStorage } = require("firebase-admin/storage");
+const bucket = getStorage().bucket();
 const PORT = process.env.PORT || 3000;
 
 
@@ -74,9 +76,14 @@ Copy code
 }
 */
 
+let serviceAccount;
+try {
+  serviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} catch (error) {
+  console.error("Failed to parse Firebase credentials:", error)
+  process.exit(1)//if parsing fails (e.g., FIREBASE_SERVICE_ACCOUNT is missing or invalid), it forcefully stops the app (process.exit(1)).
+}
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-console.log(serviceAccount);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -86,7 +93,7 @@ app.options("*", cors());
 const pool = new Pool({
   connectionString: DATABASE_URL,
   ssl: {
-    require: true,
+    require: false,
   },
 });
 
@@ -136,7 +143,7 @@ app.post("/addVideo/:videoId", async (req, res) => {
         "INSERT INTO videos (videoId,title) VALUES($1,$2) RETURNING *",
         [videoId, videoTitle],
       );
-      res.status(200).json({
+      return res.status(200).json({
         messages: "video successfully added",
         video: result.rows[0],
       });
@@ -175,7 +182,7 @@ app.post("/comment", async (req, res) => {
     const userDoc = await userRef.get();
 
     if (!userDoc.exists) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found in firestore" });
     }
     //access data in the document
     const userData = userDoc.data();
@@ -240,13 +247,15 @@ app.put("/comment/:videoId/:commentId", async (req, res) => {
       [videoId, commentId],
     );
 
-    if (commentExists) {
+    if (commentExists!==0) {
       const updateComment = await client.query(
         "UPDATE comments SET comment=$1 WHERE user_uid=$2 AND video_id=$3 AND id=$4 RETURNING *",
         [updatedComment, userUID, videoId, commentId],
       );
-      res.status(200).json(updateComment);
+     return res.status(200).json(updateComment);
     }
+   res.status(404).json({ message: "Comment not found" });
+
   } catch (error) {
     res.status(500).json(error);
   } finally {
