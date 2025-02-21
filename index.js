@@ -8,7 +8,7 @@ const express = require("express");
 require("dotenv").config();
 
 const { Pool } = require("pg");
-const { DATABASE_URL } = process.env;
+const { DATABASE_URL,FIREBASE_SERVICE_ACCOUNT } = process.env;
 
 const app = express();
 module.exports = app
@@ -78,7 +78,7 @@ Copy code
 
 let serviceAccount;
 try {
-  serviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  serviceAccount=JSON.parse(FIREBASE_SERVICE_ACCOUNT);
 } catch (error) {
   console.error("Failed to parse Firebase credentials:", error)
   process.exit(1)//if parsing fails (e.g., FIREBASE_SERVICE_ACCOUNT is missing or invalid), it forcefully stops the app (process.exit(1)).
@@ -93,7 +93,7 @@ app.options("*", cors());
 const pool = new Pool({
   connectionString: DATABASE_URL,
   ssl: {
-    require: false,
+ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
   },
 });
 
