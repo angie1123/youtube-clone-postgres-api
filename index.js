@@ -78,6 +78,7 @@ Copy code
 
 let serviceAccount;
 try {
+  console.log("line 81",serviceAccount)
   serviceAccount=JSON.parse(FIREBASE_SERVICE_ACCOUNT);
 } catch (error) {
   console.error("Failed to parse Firebase credentials:", error)
