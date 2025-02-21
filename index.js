@@ -16,7 +16,6 @@ const cors = require("cors");
 const path = require("path");
 //This library allows you to interact with Firebase services from a backend environment (like a server), instead of just from client applications (like web or mobile apps).
 const admin = require("firebase-admin");
-const { getStorage } = require("firebase-admin/storage");
 const bucket = getStorage().bucket();
 const PORT = process.env.PORT || 3000;
 
@@ -90,6 +89,7 @@ admin.initializeApp({
 });
 app.options("*", cors());
 
+const { getStorage } = require("firebase-admin/storage");
 
 const pool = new Pool({
   connectionString: DATABASE_URL,
