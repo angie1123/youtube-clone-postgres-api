@@ -79,9 +79,12 @@ try {
   process.exit(1)//if parsing fails (e.g., FIREBASE_SERVICE_ACCOUNT is missing or invalid), it forcefully stops the app (process.exit(1)).
 }
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
+
 app.options("*", cors());
 
 const { getStorage } = require("firebase-admin/storage");
