@@ -26,7 +26,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your frontend's URL
+    origin: "https://youtube-clone-final.vercel.app", // Replace with your frontend's URL
     methods: "GET,POST,PUT,DELETE",
     credentials: true, // Allow cookies if needed
   }),
