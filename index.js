@@ -88,8 +88,7 @@ if (!admin.apps.length) {
 app.options("*", cors());
 
 const { getStorage } = require("firebase-admin/storage");
-const bucket = getStorage().bucket();
-
+const bucket = getStorage().bucket(process.env.FIREBASE_STORAGE_BUCKET);
 const pool = new Pool({
   connectionString: DATABASE_URL,
   ssl: {
