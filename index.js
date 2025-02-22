@@ -73,7 +73,7 @@ Copy code
 let serviceAccount;
 try {
   console.log("line 81",serviceAccount)
-  serviceAccount=JSON.parse(import.meta.env.FIREBASE_SERVICE_ACCOUNT);
+  serviceAccount=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 } catch (error) {
   console.error("Failed to parse Firebase credentials:", error)
   process.exit(1)//if parsing fails (e.g., FIREBASE_SERVICE_ACCOUNT is missing or invalid), it forcefully stops the app (process.exit(1)).
@@ -93,9 +93,6 @@ app.options("*", cors());
 // const { getStorage } = require("firebase-admin/storage");
 const pool = new Pool({
   connectionString: DATABASE_URL,
-  ssl: {
-ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
-  },
 });
 
 app.post("/saveUser", async (req, res) => {
