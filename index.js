@@ -12,7 +12,7 @@ const cors = require("cors");
 const path = require("path");
 //This library allows you to interact with Firebase services from a backend environment (like a server), instead of just from client applications (like web or mobile apps).
 const admin = require("firebase-admin");
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json());
@@ -289,6 +289,11 @@ app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname,'index.html'));
 });
 
-app.listen(PORT, () => {
-console.log(`🚀 Server running at http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+// console.log(`🚀 Server running at http://localhost:${PORT}`);
+// });//no need port after deploy in vercel
+app.listen(() => {
+  console.log(`Server is running`);
 });
+
+
