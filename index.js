@@ -73,22 +73,24 @@ Copy code
 let serviceAccount;
 try {
   console.log("line 81",serviceAccount)
-  serviceAccount=JSON.parse(FIREBASE_SERVICE_ACCOUNT);
+  serviceAccount=JSON.parse(import.meta.env.FIREBASE_SERVICE_ACCOUNT);
 } catch (error) {
   console.error("Failed to parse Firebase credentials:", error)
   process.exit(1)//if parsing fails (e.g., FIREBASE_SERVICE_ACCOUNT is missing or invalid), it forcefully stops the app (process.exit(1)).
 }
 
+//admin.apps is an array of initialized Firebase apps.when there is no length in admin.apps only initialize it
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
+    storageBucket:serviceAccount.storageBucket//firebase storage bucket
+
   });
 }
 
 app.options("*", cors());
 
-const { getStorage } = require("firebase-admin/storage");
-const bucket = getStorage().bucket(process.env.FIREBASE_STORAGE_BUCKET);
+// const { getStorage } = require("firebase-admin/storage");
 const pool = new Pool({
   connectionString: DATABASE_URL,
   ssl: {
