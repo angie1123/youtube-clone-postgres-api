@@ -72,7 +72,7 @@ Copy code
 
 let serviceAccount;
 try {
-  serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT);
+  serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT.replace(/\\n/g, '\n'));
     console.log(serviceAccount)
 
 } catch (error) {
