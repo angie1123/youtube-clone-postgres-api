@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const { Pool } = require("pg");
 const { DATABASE_URL,FIREBASE_SERVICE_ACCOUNT,FIREBASE_STORAGE_BUCKET } = process.env;
-
+console.log(FIREBASE_SERVICE_ACCOUNT)
 const app = express();  
 module.exports = app
 const cors = require("cors");
