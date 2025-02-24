@@ -69,13 +69,14 @@ Copy code
   age: 30
 }
 */
-console.log(typeof FIREBASE_SERVICE_ACCOUNT)
+
 let serviceAccount;
 try {
   // This will replace \\n with actual newlines, making it work properly when passing to Firebase Admin SDK.
   //g ensures all occurrences of \\n are replaced, not just the first one. 
-  const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT.json());
-    console.log(serviceAccount)
+  const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT);
+  console.log(serviceAccount)
+  console.log(typeof FIREBASE_SERVICE_ACCOUNT)
 
 } catch (error) {
   console.error("Failed to parse Firebase credentials:", error)
