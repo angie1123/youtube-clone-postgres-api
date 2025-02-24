@@ -4,9 +4,9 @@ const express = require("express");
 require("dotenv").config();
 
 const { Pool } = require("pg");
-const { DATABASE_URL,FIREBASE_SERVICE_ACCOUNT } = process.env;
+const { DATABASE_URL,FIREBASE_SERVICE_ACCOUNT,FIREBASE_STORAGE_BUCKET } = process.env;
 
-const app = express();
+const app = express();  
 module.exports = app
 const cors = require("cors");
 const path = require("path");
@@ -72,7 +72,9 @@ Copy code
 
 let serviceAccount;
 try {
-  serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT.replace(/\\n/g, '\n'));
+  // This will replace \\n with actual newlines, making it work properly when passing to Firebase Admin SDK.
+  //g ensures all occurrences of \\n are replaced, not just the first one. 
+  const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT.replace(/\\n/g, "\n"));
     console.log(serviceAccount)
 
 } catch (error) {
@@ -84,7 +86,7 @@ try {
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket:serviceAccount.storageBucket//firebase storage bucket
+    storageBucket:FIREBASE_STORAGE_BUCKET//firebase storage bucket
 
   });
 }
