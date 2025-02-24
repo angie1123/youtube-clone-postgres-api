@@ -69,7 +69,7 @@ Copy code
   age: 30
 }
 */
-typeof FIREBASE_SERVICE_ACCOUNT
+console.log(typeof FIREBASE_SERVICE_ACCOUNT)
 let serviceAccount;
 try {
   // This will replace \\n with actual newlines, making it work properly when passing to Firebase Admin SDK.
