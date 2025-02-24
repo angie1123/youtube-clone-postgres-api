@@ -69,12 +69,12 @@ Copy code
   age: 30
 }
 */
-
+typeof FIREBASE_SERVICE_ACCOUNT
 let serviceAccount;
 try {
   // This will replace \\n with actual newlines, making it work properly when passing to Firebase Admin SDK.
   //g ensures all occurrences of \\n are replaced, not just the first one. 
-  const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT)
+  const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT.replace(/\\n/g, "\n"));
     console.log(serviceAccount)
 
 } catch (error) {
