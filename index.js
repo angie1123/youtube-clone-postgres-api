@@ -77,7 +77,7 @@ try {
   const serviceAccount = FIREBASE_SERVICE_ACCOUNT
   console.log(serviceAccount)
   console.log(typeof FIREBASE_SERVICE_ACCOUNT)
-  serviceAccount=serviceAccount.json()
+  // serviceAccount=serviceAccount.json()
 
 } catch (error) {
   console.error("Failed to parse Firebase credentials:", error)
