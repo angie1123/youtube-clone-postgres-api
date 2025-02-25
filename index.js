@@ -76,9 +76,8 @@ try {
   serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT);
   serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   // console.log(serviceAccount)
-  console.log(typeof FIREBASE_SERVICE_ACCOUNT)
-  console.log("Private key start:", serviceAccount.private_key.substring(0, 30));
-  console.log("Private key end:", serviceAccount.private_key.slice(-30));
+  console.log(typeof serviceAccount)
+  console.log("Private Key:\n", serviceAccount.private_key);
   // serviceAccount=serviceAccount.json()
 
 } catch (error) {
