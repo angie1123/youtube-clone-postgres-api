@@ -5,7 +5,6 @@ require("dotenv").config();
 
 const { Pool } = require("pg");
 const { DATABASE_URL,FIREBASE_SERVICE_ACCOUNT,FIREBASE_STORAGE_BUCKET } = process.env;
-console.log(FIREBASE_SERVICE_ACCOUNT)
 const app = express();  
 module.exports = app
 const cors = require("cors");
@@ -78,7 +77,8 @@ try {
   serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   // console.log(serviceAccount)
   console.log(typeof FIREBASE_SERVICE_ACCOUNT)
-  
+  console.log("Private key start:", serviceAccount.private_key.substring(0, 30));
+  console.log("Private key end:", serviceAccount.private_key.slice(-30));
   // serviceAccount=serviceAccount.json()
 
 } catch (error) {
