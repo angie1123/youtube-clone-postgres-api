@@ -77,6 +77,7 @@ try {
   serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   // console.log(serviceAccount)
   console.log(typeof serviceAccount)
+  console.log("Private Key Length:", serviceAccount.private_key.length);
   console.log("Private Key:\n", serviceAccount.private_key);
   // serviceAccount=serviceAccount.json()
 
