@@ -27,7 +27,6 @@ app.use(
 );
 
 
-
 //express.json() is a built in middleware function in express that parses incoming request with JSON payloads
 //json payload is the data pass from the request
 
