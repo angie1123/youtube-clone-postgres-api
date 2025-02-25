@@ -76,6 +76,7 @@ try {
   serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT);
   serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   // console.log(serviceAccount)
+  serviceAccount.private_key = Buffer.from(serviceAccount.private_key, 'utf8').toString();
   console.log(typeof serviceAccount)
   console.log("Private Key Length:", serviceAccount.private_key.length);
   console.log("Private Key:\n", serviceAccount.private_key);
