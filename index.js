@@ -75,8 +75,9 @@ try {
   // This will replace \\n with actual newlines, making it work properly when passing to Firebase Admin SDK.
   //g ensures all occurrences of \\n are replaced, not just the first one. 
   const serviceAccount = FIREBASE_SERVICE_ACCOUNT
-  console.log(serviceAccount)
+  // console.log(serviceAccount)
   console.log(typeof FIREBASE_SERVICE_ACCOUNT)
+  
   // serviceAccount=serviceAccount.json()
 
 } catch (error) {
