@@ -75,6 +75,7 @@ try {
   // This will replace \\n with actual newlines, making it work properly when passing to Firebase Admin SDK.
   //g ensures all occurrences of \\n are replaced, not just the first one. 
   serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT);
+  serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
   // console.log(serviceAccount)
   console.log(typeof FIREBASE_SERVICE_ACCOUNT)
   
