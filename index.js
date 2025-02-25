@@ -79,6 +79,8 @@ try {
   console.log(typeof serviceAccount)
   console.log("Private Key Length:", serviceAccount.private_key.length);
   console.log("Private Key:\n", serviceAccount.private_key);
+  console.log("service account:\n", serviceAccount);
+
   // serviceAccount=serviceAccount.json()
 
 } catch (error) {
